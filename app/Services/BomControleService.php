@@ -58,6 +58,11 @@ class BomControleService
         return;
     }
 
+    public static function createCustomer(Customer $customer)
+    {
+        Log::info("criar customer bom controlle");
+    }
+
     private static function buildUrl(string $endpoint): string
     {
         $baseUrl = env('BOMCONTROLE_URL');

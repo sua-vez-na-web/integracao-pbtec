@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Models\Customer;
 use Illuminate\Support\Facades\Http;
-
+use Illuminate\Support\Facades\Log;
 
 class GeikoService
 {
@@ -55,6 +55,12 @@ class GeikoService
                     ]
                 ]
             ]);
+    }
+
+
+    public static function createCustomer(Customer $customer)
+    {
+        Log::info("criar customer geiko");
     }
 
     private static function buildUrl(string $endpoint): string

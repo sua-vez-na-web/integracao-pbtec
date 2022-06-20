@@ -16,4 +16,9 @@ class Customer extends Model
         'bomcontrole_id',
         'geiko_id'
     ];
+
+    public function scopeFilterCnpj($query, $cnpj)
+    {
+        return $query->where('cnpj', '=', $cnpj);
+    }
 }
