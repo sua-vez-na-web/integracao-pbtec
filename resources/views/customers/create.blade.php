@@ -42,8 +42,16 @@
                     @csrf
                     <div class="form-group row @error('cnpj') has-error @enderror">
                         <label class="col-lg-2 text-right col-form-label">CNPJ</label>
-                        <div class="col-lg-10">
-                            <input type="text" placeholder="Apenas números" class="form-control" name="cnpj" value="{{ old('cnpj') ?? '' }}" max="14">
+                        <div class="col-lg-4">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Apenas números" id="cnpj" class="form-control" name="cnpj" value="{{ old('cnpj') ?? '' }}" max="14">
+
+                                <span class="input-group-append">
+                                    <button type="button" class="btn btn-primary" id="btnConsultar">Consullar Cadastro
+                                    </button>
+                                </span>
+                            </div>
+                            <span class="text-block text-danger" id="message"></span>
                             @error('cnpj')
                             <span class="form-text m-b-none">{{$errors->first('cnpj')}}</span>
                             @enderror
@@ -52,7 +60,7 @@
                     <div class="form-group row @error('razao_social') has-error @enderror">
                         <label class="col-lg-2 text-right col-form-label">Razão Social</label>
                         <div class="col-lg-10">
-                            <input type="text" placeholder="" class="form-control" name="razao_social" value="{{ old('razao_social') ?? '' }}">
+                            <input type="text" placeholder="" id="razao_social" class="form-control" name="razao_social" value="{{ old('razao_social') ?? '' }}">
                             @error('razao_social')
                             <span class="form-text m-b-none">{{$errors->first('razao_social')}}</span>
                             @enderror
@@ -61,9 +69,82 @@
                     <div class="form-group row @error('nome_fantasia') has-error @enderror">
                         <label class="col-lg-2 text-right col-form-label">Nome Fantasia</label>
                         <div class="col-lg-10">
-                            <input type="text" placeholder="" class="form-control" name="nome_fantasia" value="{{ old('nome_fantasia') ?? '' }}">
+                            <input type="text" placeholder="" id="nome_fantasia" class="form-control" name="nome_fantasia" value="{{ old('nome_fantasia') ?? '' }}">
                             @error('nome_fantasia')
                             <span class="form-text m-b-none">{{$errors->first('nome_fantasia')}}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="form-group row @error('tipo_cadastro') has-error @enderror">
+                        <label class="col-lg-2 text-right col-form-label">Tipo Cadastro</label>
+                        <div class="col-lg-10">
+                            <input type="text" placeholder="" id="tipo_cadastro" class="form-control" name="tipo_cadastro" value="{{ old('tipo_cadastro') ?? '' }}">
+                            @error('tipo_cadastro')
+                            <span class="form-text m-b-none">{{$errors->first('tipo_cadastro')}}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="form-group row @error('contato') has-error @enderror">
+                        <label class="col-lg-2 text-right col-form-label">Contato</label>
+                        <div class="col-lg-10">
+                            <input type="text" placeholder="" id="contato" class="form-control" name="contato" value="{{ old('contato') ?? '' }}">
+                            @error('contato')
+                            <span class="form-text m-b-none">{{$errors->first('contato')}}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="form-group row @error('telefone') has-error @enderror">
+                        <label class="col-lg-2 text-right col-form-label">Telefone</label>
+                        <div class="col-lg-10">
+                            <input type="text" placeholder="" id="telefone" class="form-control" name="telefone" value="{{ old('telefone') ?? '' }}">
+                            @error('telefone')
+                            <span class="form-text m-b-none">{{$errors->first('telefone')}}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="form-group row @error('cep') has-error @enderror">
+                        <label class="col-lg-2 text-right col-form-label">CEP</label>
+                        <div class="col-lg-10">
+                            <input type="text" placeholder="" id="cep" class="form-control" name="cep" value="{{ old('cep') ?? '' }}">
+                            @error('cep')
+                            <span class="form-text m-b-none">{{$errors->first('cep')}}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="form-group row @error('logradouro') has-error @enderror">
+                        <label class="col-lg-2 text-right col-form-label">Logradouro</label>
+                        <div class="col-lg-10">
+                            <input type="text" placeholder="" id="logradouro" class="form-control" name="logradouro" value="{{ old('logradouro') ?? '' }}">
+                            @error('logradouro')
+                            <span class="form-text m-b-none">{{$errors->first('logradouro')}}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="form-group row @error('numero') has-error @enderror">
+                        <label class="col-lg-2 text-right col-form-label">Número</label>
+                        <div class="col-lg-10">
+                            <input type="text" placeholder="" id="numero" class="form-control" name="numero" value="{{ old('numero') ?? '' }}">
+                            @error('numero')
+                            <span class="form-text m-b-none">{{$errors->first('numero')}}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="form-group row @error('bairro') has-error @enderror">
+                        <label class="col-lg-2 text-right col-form-label">Bairro</label>
+                        <div class="col-lg-10">
+                            <input type="text" placeholder="" id="bairro" class="form-control" name="bairro" value="{{ old('bairro') ?? '' }}">
+                            @error('bairro')
+                            <span class="form-text m-b-none">{{$errors->first('bairro')}}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="form-group row @error('cidade') has-error @enderror">
+                        <label class="col-lg-2 text-right col-form-label">Cidade</label>
+                        <div class="col-lg-10">
+                            <input type="text" placeholder="" id="cidade" class="form-control" name="cidade" value="{{ old('cidade') ?? '' }}">
+                            @error('cidade')
+                            <span class="form-text m-b-none">{{$errors->first('cidade')}}</span>
                             @enderror
                         </div>
                     </div>
@@ -119,6 +200,40 @@
             checkboxClass: 'icheckbox_square-green',
             radioClass: 'iradio_square-green',
         });
+
+        $('#btnConsultar').on('click', async function() {
+
+            const cnpj = $('#cnpj').val();
+
+            $.ajax({
+                url: '/consultaClienteBycnpj?cnpj=' + cnpj,
+                type: 'GET',
+                success: function(res) {
+                    console.log(res);
+                    preencherCampos(res.data)
+
+                    $('#message').html(res.message);
+
+                },
+                error: function(error) {
+                    console.log(err)
+                }
+            });
+
+        });
+
+        function preencherCampos(campos) {
+            $('#nome_fantasia').val(campos.fantasia ?? campos.nome_fantasia);
+            $('#razao_social').val(campos.razao_social);
+            $('#tipo_cadastro').val(campos.tipo_pessoa ?? campos.tipo_cadastro);
+            $('#contato').val(campos.contato);
+            $('#telefone').val(campos.telefone);
+            $('#cep').val(campos.endereco ? campos.endereco.cep : campos.cep);
+            $('#logradouro').val(campos.endereco ? campos.endereco.logradouro : campos.logradouro);
+            $('#bairro').val(campos.endereco ? campos.endereco.bairro : campos.bairro);
+            $('#cidade').val(campos.endereco ? campos.endereco.cidade : campos.cidade);
+            $('#numero').val(campos.endereco ? campos.endereco.numero : campos.numero)
+        }
     });
 </script>
 @endsection

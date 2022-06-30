@@ -61,6 +61,49 @@ class BomControleService
     public static function createCustomer(Customer $customer)
     {
         Log::info("criar customer bom controlle");
+        Log::info(json_encode($customer));
+
+        $response = HTTP::withHeaders(['Authorization' => 'ApiKey' . env('BOMCONTROLE_KEY')])
+            ->withoutVerifying()
+            ->post(self::buildUrl('Cliente/Criar'), [
+                "Endereco" => [
+                    "TipoLogradouro" => "Rua",
+                    "Logradouro" => $customer->logradouro,
+                    "Numero" => $customer->numero,
+                    "Complemento" => $customer->complemento ?? '',
+                    "Bairro" => $customer->bairro,
+                    "Cep" => $customer->cep,
+                    "Cidade" => $customer->cidade,
+                    "Uf" => $customer->uf ?? 'PB'
+                ],
+                "Contatos" => [
+                    [
+                        "Nome" => $customer->contato,
+                        "Email" => $customer->email,
+                        "Telefone" => $customer->telefone,
+                        "Padrao" => "",
+                        "Cobranca" => ""
+                    ]
+                ],
+                // "PessoaFisica" => [
+                //     "Documento" => "param17",
+                //     "Nome" => "param18",
+                //     "Sexo" => "param19"
+                // ],
+                "PessoaJuridica" => [
+                    "Documento" => $customer->cnpj,
+                    "NomeFantasia" => $customer->nome_fantasia,
+                    "RazaoSocial" => $customer->razao_social,
+                    "IsentoInscricaoEstadual" => $customer->rgie ?? 'ISENTO',
+                    "InscricaoEstadual" => "",
+                    "UFInscricaoEstadual" => " ",
+                    "InscricaoMunicipal" => " "
+                ]
+            ]);
+
+        Log::info("BR" . json_encode($response->object()));
+
+        return $response->object();
     }
 
     private static function buildUrl(string $endpoint): string

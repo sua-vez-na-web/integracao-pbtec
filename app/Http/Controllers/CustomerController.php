@@ -44,16 +44,17 @@ class CustomerController extends Controller
      */
     public function store(CreateCustomerRequest $request)
     {
-        $customer = Customer::create($request->all());
-
-        if ($request->has('geiko_on')) {
-            GeikoService::createCustomer($customer);
-        }
+        $customer = Customer::updateOrcreate(['cnpj' => $request->cnpj], $request->all());
 
         if ($request->has('bomcontrolle_on')) {
-            BomControleService::createCustomer($customer);
+            $response = BomControleService::createCustomer($customer);
         }
-        return redirect()->route('customers.index');
+
+        // if ($request->has('geiko_on')) {
+        //     $response =  GeikoService::createCustomer($customer);
+        // }
+
+        return redirect()->route('customers.index')->with('message', $response);
     }
 
     /**

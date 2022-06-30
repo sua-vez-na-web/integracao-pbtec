@@ -61,7 +61,7 @@ class SendGeikoCustomerNotification implements ShouldQueue
                     'customer_id' => $customer->geiko_id
                 ]);
 
-                GeikoService::sendCustomerNotification($notification);
+                // GeikoService::sendCustomerNotification($notification);
             }
         } else {
             Log::info("Nao foi possivel notificar cliente GEIKO - Cliente Inexistente");

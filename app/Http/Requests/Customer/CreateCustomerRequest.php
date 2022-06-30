@@ -24,7 +24,7 @@ class CreateCustomerRequest extends FormRequest
     public function rules()
     {
         return [
-            'cnpj' => 'required|unique:customers,cnpj|max:14|min:14|integer',
+            'cnpj' => 'required',
             'nome_fantasia' => 'required',
             'razao_social' => 'required',
         ];

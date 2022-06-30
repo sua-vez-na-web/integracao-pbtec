@@ -18,9 +18,20 @@ class CreateCustomersTable extends Migration
             $table->string('cnpj')->nullable();
             $table->string('razao_social')->nullable();
             $table->string('nome_fantasia')->nullable();
-            $table->integer('bomcontrole_id')->nullable();
-            $table->integer('geiko_id')->nullable();
+            $table->string('logradouro')->nullable();
+            $table->string('numero')->nullable();
+            $table->string('bairro')->nullable();
+            $table->string('complemento')->nullable();
+            $table->string('cep')->nullable();
+            $table->string('cidade')->nullable();
+            $table->string('uf')->nullable();
+            $table->string('contato')->nullable();
+            $table->string('telefone')->nullable();
+            $table->string('email')->nullable();
             $table->string('status')->nullable();
+            $table->integer('geiko_id')->nullable();
+            $table->integer('bomcontrole_id')->nullable();
+            $table->string('tipo_cadastro')->nullable();
             $table->timestamps();
         });
     }

@@ -30,10 +30,12 @@ class GeikoService
         $geikoCustomer = $response->object()->clientes;
 
         if (!empty($geikoCustomer)) {
+
             Customer::where('cnpj', $cnpj)->update([
                 'geiko_id' => $geikoCustomer[0]->codigo
             ]);
-            return $geikoCustomer[0]->codigo;
+
+            return $geikoCustomer[0];
         }
 
         return false;
@@ -60,7 +62,25 @@ class GeikoService
 
     public static function createCustomer(Customer $customer)
     {
-        Log::info("criar customer geiko");
+        $response = Http::withHeaders(['chave_empresa' => env('GEIKO_KEY')])
+            ->withoutVerifying()
+            ->post(self::buildUrl('PostInCli'), [
+                "razao" => $customer->razao_social,
+                "fantasia" => $customer->fantasia,
+                "tipopessoa" => $customer->tipo_cadastro,
+                "cpfcnpj" => $customer->cnpj,
+                "ativo" => true,
+                "contato" => $customer->contato,
+                "telefone" => $customer->telefone,
+                "email" => $customer->email,
+                "cep" => $customer->cep,
+                "endereco" => $customer->logradouro,
+                "bairro" => $customer->bairro,
+                "senha" => " ",
+                "rgie" => " "
+            ]);
+
+        Log::info("GEIKO CREATE" . json_encode($response));
     }
 
     private static function buildUrl(string $endpoint): string
