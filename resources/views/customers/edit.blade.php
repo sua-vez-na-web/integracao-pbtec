@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('page-title','Novo Cliente')
+@section('page-title','Editar Cliente')
 
 @section('page-links')
 <li class="breadcrumb-item">
@@ -18,7 +18,7 @@
     <div class="col-lg-12">
         <div class="ibox ">
             <div class="ibox-title">
-                <h5>Novo Cliente</h5>
+                <h5>Editar Cliente</h5>
                 <div class="ibox-tools">
                     <a class="collapse-link">
                         <i class="fa fa-chevron-up"></i>
