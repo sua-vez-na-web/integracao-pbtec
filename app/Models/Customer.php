@@ -11,11 +11,13 @@ class Customer extends Model
 
     protected $fillable = [
         'cnpj',
+        'rgie',
         'razao_social',
         'nome_fantasia',
         'bomcontrole_id',
         'geiko_id',
         'cidade',
+        'uf',
         'logradouro',
         'cep',
         'tipo_cadastro',

@@ -78,18 +78,13 @@ class BomControleService
                 ],
                 "Contatos" => [
                     [
-                        "Nome" => $customer->contato,
-                        "Email" => $customer->email,
-                        "Telefone" => $customer->telefone,
+                        "Nome" => $customer->contato ?? "",
+                        "Email" => $customer->email ?? "",
+                        "Telefone" => $customer->telefone ?? "",
                         "Padrao" => "",
                         "Cobranca" => ""
                     ]
                 ],
-                // "PessoaFisica" => [
-                //     "Documento" => "param17",
-                //     "Nome" => "param18",
-                //     "Sexo" => "param19"
-                // ],
                 "PessoaJuridica" => [
                     "Documento" => $customer->cnpj,
                     "NomeFantasia" => $customer->nome_fantasia,
@@ -103,7 +98,7 @@ class BomControleService
 
         Log::info("BR" . json_encode($response->object()));
 
-        return $response->object();
+        return $response;
     }
 
     private static function buildUrl(string $endpoint): string

@@ -44,17 +44,24 @@ class CustomerController extends Controller
      */
     public function store(CreateCustomerRequest $request)
     {
+
         $customer = Customer::updateOrcreate(['cnpj' => $request->cnpj], $request->all());
 
         if ($request->has('bomcontrolle_on')) {
             $response = BomControleService::createCustomer($customer);
+
+            if ($response->successful()) {
+                $customer->bomcontrole_id = $response->object();
+                $customer->save();
+                return redirect()->route('customers/create')->withSUccess("Cliente Enviado para o BOM COMTROLLE");
+            } else {
+                return redirect('customers/create')
+                    ->withInput()
+                    ->withFail("BOMCONTROLE: " . $response->object()->Mensagem);
+            }
         }
 
-        // if ($request->has('geiko_on')) {
-        //     $response =  GeikoService::createCustomer($customer);
-        // }
-
-        return redirect()->route('customers.index')->with('message', $response);
+        return redirect('/customers/create')->withSuccess("Cliente Cadastrado");
     }
 
     /**
@@ -76,7 +83,9 @@ class CustomerController extends Controller
      */
     public function edit($id)
     {
-        //
+        $customer = Customer::find($id);
+
+        return view('customers.edit', compact('customer'));
     }
 
     /**
@@ -88,7 +97,9 @@ class CustomerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $customer = Customer::find($id)->update($request->all());
+
+        return redirect()->route('customers.index');
     }
 
     /**

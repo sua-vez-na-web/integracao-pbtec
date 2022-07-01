@@ -67,6 +67,7 @@
                             <th>Código Geiko</th>
                             <th>Cidade</th>
                             <th>Contato</th>
+                            <th>Telefone</th>
                             <th>Status</th>
                             <th></th>
                         </tr>
@@ -80,7 +81,8 @@
                             <td>{{$customer->bomcontrole_id ?? ''}}</td>
                             <td>{{$customer->geiko_id ?? ''}}</td>
                             <td>{{$customer->cidade ?? ''}}</td>
-                            <td>{{$customer->contato ?? ''}} | {{$customer->telefone}}</td>
+                            <td>{{$customer->contato ?? ''}}</td>
+                            <td>{{$customer->telefone}}</td>
                             <td>{{$customer->status ?? ''}}</td>
                             <th>
                                 <a href="{{ route('customers.edit',$customer->id) }}" class="btn btn-primary"><i class="fa fa-eye"></i></a>

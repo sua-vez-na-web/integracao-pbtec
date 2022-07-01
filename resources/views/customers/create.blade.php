@@ -38,7 +38,8 @@
                 </div>
             </div>
             <div class="ibox-content">
-                <form action="{{route('customers.store')}}" method="post">
+
+                <form action="{{route('customers.store')}}" method="post" autocomplete="off">
                     @csrf
                     <div class="form-group row @error('cnpj') has-error @enderror">
                         <label class="col-lg-2 text-right col-form-label">CNPJ</label>
@@ -53,6 +54,18 @@
                             </div>
                             <span class="text-block text-danger" id="message"></span>
                             @error('cnpj')
+                            <span class="form-text m-b-none">{{$errors->first('cnpj')}}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="form-group row @error('rgie') has-error @enderror">
+                        <label class="col-lg-2 text-right col-form-label">RG I.E.</label>
+                        <div class="col-lg-4">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="rgie" class="form-control" name="rgie" value="{{ old('rgie') ?? '' }}">
+                            </div>
+                            <span class="text-block text-danger" id="message"></span>
+                            @error('rgie')
                             <span class="form-text m-b-none">{{$errors->first('cnpj')}}</span>
                             @enderror
                         </div>
@@ -102,6 +115,15 @@
                             @enderror
                         </div>
                     </div>
+                    <div class="form-group row @error('email') has-error @enderror">
+                        <label class="col-lg-2 text-right col-form-label">Email</label>
+                        <div class="col-lg-10">
+                            <input type="text" placeholder="" id="email" class="form-control" name="email" value="{{ old('email') ?? '' }}">
+                            @error('email')
+                            <span class="form-text m-b-none">{{$errors->first('email')}}</span>
+                            @enderror
+                        </div>
+                    </div>
                     <hr>
                     <div class="form-group row @error('cep') has-error @enderror">
                         <label class="col-lg-2 text-right col-form-label">CEP</label>
@@ -148,17 +170,13 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label for="" class="col-lg-2 text-right col-form-label"></label>
+                    <div class="form-group row @error('uf') has-error @enderror">
+                        <label class="col-lg-2 text-right col-form-label">UF</label>
                         <div class="col-lg-10">
-                            <div class="i-checks">
-                                <label class="">
-                                    <div class="icheckbox_square-green" style="position: relative;">
-                                        <input type="checkbox" style="position: absolute; opacity: 0;" name="geiko_on">
-                                        <ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
-                                    </div> Enviar Geiko
-                                </label>
-                            </div>
+                            <input type="text" placeholder="" id="uf" class="form-control" name="uf" value="{{ old('uf') ?? '' }}">
+                            @error('uf')
+                            <span class="form-text m-b-none">{{$errors->first('uf')}}</span>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group row">
@@ -224,15 +242,18 @@
 
         function preencherCampos(campos) {
             $('#nome_fantasia').val(campos.fantasia ?? campos.nome_fantasia);
+            $('#rgie').val(campos.rgie);
             $('#razao_social').val(campos.razao_social);
             $('#tipo_cadastro').val(campos.tipo_pessoa ?? campos.tipo_cadastro);
             $('#contato').val(campos.contato);
-            $('#telefone').val(campos.telefone);
+            $('#telefone').val(campos.telefone ?? campos.celular);
             $('#cep').val(campos.endereco ? campos.endereco.cep : campos.cep);
             $('#logradouro').val(campos.endereco ? campos.endereco.logradouro : campos.logradouro);
             $('#bairro').val(campos.endereco ? campos.endereco.bairro : campos.bairro);
             $('#cidade').val(campos.endereco ? campos.endereco.cidade : campos.cidade);
             $('#numero').val(campos.endereco ? campos.endereco.numero : campos.numero)
+
+            $('#email').val(campos.email);
         }
     });
 </script>

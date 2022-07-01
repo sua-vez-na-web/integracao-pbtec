@@ -164,8 +164,18 @@
             </div>
 
             <div class="wrapper wrapper-content">
-                @yield('page-content')
+                @if(Session::has('success'))
+                <div class="alert alert-success">
+                    {{Session::get('success')}}
+                </div>
+                @endif
 
+                @if(Session::has('fail'))
+                <div class="alert alert-danger">
+                    {{Session::get('fail')}}
+                </div>
+                @endif
+                @yield('page-content')
             </div>
 
             <div class="footer">
