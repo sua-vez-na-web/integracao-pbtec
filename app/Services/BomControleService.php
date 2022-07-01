@@ -63,6 +63,8 @@ class BomControleService
         Log::info("criar customer bom controlle");
         Log::info(json_encode($customer));
 
+        Log::info($customer->uf);
+
         $response = HTTP::withHeaders(['Authorization' => 'ApiKey' . env('BOMCONTROLE_KEY')])
             ->withoutVerifying()
             ->post(self::buildUrl('Cliente/Criar'), [
@@ -74,25 +76,25 @@ class BomControleService
                     "Bairro" => $customer->bairro,
                     "Cep" => $customer->cep,
                     "Cidade" => $customer->cidade,
-                    "Uf" => $customer->uf ?? 'PB'
+                    "Uf" => $customer->uf
                 ],
                 "Contatos" => [
                     [
                         "Nome" => $customer->contato ?? "",
                         "Email" => $customer->email ?? "",
                         "Telefone" => $customer->telefone ?? "",
-                        "Padrao" => "",
-                        "Cobranca" => ""
+                        "Padrao" => true,
+                        "Cobranca" => true
                     ]
                 ],
                 "PessoaJuridica" => [
                     "Documento" => $customer->cnpj,
                     "NomeFantasia" => $customer->nome_fantasia,
                     "RazaoSocial" => $customer->razao_social,
-                    "IsentoInscricaoEstadual" => $customer->rgie ?? 'ISENTO',
-                    "InscricaoEstadual" => "",
-                    "UFInscricaoEstadual" => " ",
-                    "InscricaoMunicipal" => " "
+                    "IsentoInscricaoEstadual" => false,
+                    "InscricaoEstadual" => $customer->rgie ?? 'ISENTO',
+                    "UFInscricaoEstadual" => $customer->uf,
+                    "InscricaoMunicipal" => null
                 ]
             ]);
 

@@ -53,7 +53,7 @@ class CustomerController extends Controller
             if ($response->successful()) {
                 $customer->bomcontrole_id = $response->object();
                 $customer->save();
-                return redirect()->route('customers.create')->withSUccess("Cliente Enviado para o BOM COMTROLLE");
+                return redirect()->route('customers.index')->withSuccess("Cliente Enviado para o BOM COMTROLLE");
             } else {
                 return redirect('customers/create')
                     ->withInput()
