@@ -41,6 +41,14 @@
 
                 <form action="{{route('customers.store')}}" method="post" autocomplete="off">
                     @csrf
+
+                    <div class="form-group row">
+                        <label class="col-lg-2 text-right col-form-label">Codigo GEIKO</label>
+
+                        <div class="col-lg-4">
+                            <input type="text" name="geiko_id" id="geiko_id" readonly value="" class="form-control">
+                        </div>
+                    </div>
                     <div class="form-group row @error('cnpj') has-error @enderror">
                         <label class="col-lg-2 text-right col-form-label">CNPJ</label>
                         <div class="col-lg-4">
@@ -48,7 +56,7 @@
                                 <input type="text" class="form-control" placeholder="Apenas números" id="cnpj" class="form-control" name="cnpj" value="{{ old('cnpj') ?? '' }}" max="14">
 
                                 <span class="input-group-append">
-                                    <button type="button" class="btn btn-primary" id="btnConsultar">Consullar Cadastro
+                                    <button type="button" class="btn btn-primary" id="btnConsultar">Consultar Cadastro
                                     </button>
                                 </span>
                             </div>
@@ -241,6 +249,7 @@
         });
 
         function preencherCampos(campos) {
+            $('#geiko_id').val(campos.codigo);
             $('#nome_fantasia').val(campos.fantasia ?? campos.nome_fantasia);
             $('#rgie').val(campos.rgie);
             $('#razao_social').val(campos.razao_social);
