@@ -40,9 +40,10 @@ class RunBomControleApi extends Command
     public function handle()
     {
 
-        $customers = Customer::all();
+        $customers = Customer::whereNull('bomcontrole_id')->get();
 
         foreach ($customers as $key => $customer) {
+
             $this->info("Cliente cnpj {$customer->cnpj} = {$key}");
 
             $customerId = BomControleService::getCustomerByCnpj($customer->cnpj);

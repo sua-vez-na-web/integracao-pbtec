@@ -44,7 +44,6 @@ class CustomerController extends Controller
      */
     public function store(CreateCustomerRequest $request)
     {
-
         $customer = Customer::updateOrcreate(['cnpj' => $request->cnpj], $request->all());
 
         if ($request->has('bomcontrolle_on')) {

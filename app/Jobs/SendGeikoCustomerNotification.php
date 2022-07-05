@@ -47,7 +47,7 @@ class SendGeikoCustomerNotification implements ShouldQueue
         if ($customer) {
 
             $notification = GeikoNotification::where('bill_id', $this->billId)
-                ->where('type', 'IN')
+                // ->where('type', 'IN')
                 ->first();
 
             if (!$notification) {
@@ -55,13 +55,14 @@ class SendGeikoCustomerNotification implements ShouldQueue
                 $notification = GeikoNotification::create([
                     'bill_id' => $this->billId,
                     'message' => "ENTRAR EM CONTATO COM FINANCEIRO",
-                    'type' => $this->type,
+                    // 'type' => $this->type,
                     'include_at' => now(),
                     'removed_at' => now()->addYear(),
                     'customer_id' => $customer->geiko_id
                 ]);
 
                 // GeikoService::sendCustomerNotification($notification);
+                Log::info('NOTIFICATION ' . json_encode($notification));
             }
         } else {
             Log::info("Nao foi possivel notificar cliente GEIKO - Cliente Inexistente");

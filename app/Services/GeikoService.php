@@ -42,18 +42,19 @@ class GeikoService
     }
 
 
-    public static function sendCustomerNotification($notification): void
+    public static function sendCustomerNotification($notification)
     {
-        Http::withHeaders(['chave_empresa' => env('GEIKO_KEY')])
+
+        return Http::withHeaders(['chave_empresa' => env('GEIKO_KEY')])
             ->withoutVerifying()
             ->post(self::buildUrl('Ncliente'), [
                 "nClientes" => [
                     [
-                        "codNotificacaoCli" => $notification->id,
+                        "codNotificacaoCli" => $notification->bill_id,
                         "codCli" => $notification->customer_id,
-                        "descricao" => "ENTRAR EM CONTATO FINANCEIRO",
-                        "dataInclusao" => now(),
-                        "dataBaixa" => now()->addYear()
+                        "descricao" => $notification->message,
+                        "dataInclusao" => $notification->include_at->format('Y-m-d'),
+                        "dataBaixa" => $notification->removed_at->format('Y-m-d')
                     ]
                 ]
             ]);

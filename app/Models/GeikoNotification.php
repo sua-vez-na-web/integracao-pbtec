@@ -17,4 +17,9 @@ class GeikoNotification extends Model
         'customer_id',
         'type'
     ];
+
+    protected $dates = [
+        'include_at',
+        'removed_at'
+    ];
 }

@@ -15,4 +15,13 @@ class Bill extends Model
         'due_date',
         'due_amount'
     ];
+
+    protected $dates = [
+        'due_date'
+    ];
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
+    }
 }

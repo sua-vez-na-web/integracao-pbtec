@@ -41,43 +41,25 @@ class RunGeikoApi extends Command
     public function handle()
     {
 
-        $customers = Customer::all();
-
-        foreach ($customers as $key => $customer) {
-            $this->info("Cliente cnpj {$customer->cnpj} = {$key}");
-            GeikoService::getGeikoCustomer($customer->cnpj);
-        }
-
         $geikoCustomers = GeikoService::getGeikoCustomers();
-        $exitentes = 0;
-        $naoExistem = 0;
+
 
         foreach ($geikoCustomers->clientes as $geiko) {
 
-            $exists = Customer::where('cnpj', $geiko->cpf_cnpj)
-                ->where('geiko_id', $geiko->codigo)
+            $this->info('Consultando Cliente: ' . $geiko->razao_social);
+            $this->info('CNPJ: ' . $geiko->cpf_cnpj);
+
+            $customer = Customer::where('cnpj', $geiko->cpf_cnpj)
                 ->first();
 
-            if (!$exists) {
+            if ($customer) {
+                $customer->geiko_id = $geiko->codigo;
+                $customer->save();
 
-                Customer::create([
-                    'cnpj' => $geiko->cpf_cnpj,
-                    'razao_social' => $geiko->razao_social,
-                    'nome_fantasia' => $geiko->fantasia,
-                    'bomcontrole_id' => null,
-                    'geiko_id' => $geiko->codigo
-                ]);
-
-                $this->info("Novo Cliente {$geiko->cpf_cnpj} = {$geiko->razao_social}");
-                $naoExistem++;
+                $this->info("Cliente Atualizado: " . $customer->cnpj);
             } else {
-                $exitentes++;
+                $this->info("Cleinte não localizdo no integrador");
             }
         }
-
-        $this->info("NAO EXISTE: {$naoExistem}");
-        $this->info("EXISTEM: {$exitentes}");
-
-        return 0;
     }
 }

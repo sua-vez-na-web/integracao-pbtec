@@ -7,6 +7,7 @@ use App\Models\Bill;
 use App\Models\Customer;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use phpDocumentor\Reflection\Types\Boolean;
 
 class BomControleService
 {
@@ -33,29 +34,25 @@ class BomControleService
     }
 
 
-    public static function getCustomerBills($customerId): void
+    public static function getCustomerBills($customerId)
     {
         $response = HTTP::withHeaders(['Authorization' => "ApiKey" . env("BOMCONTROLE_KEY")])
             ->withoutVerifying()
             ->get(self::buildUrl("/Fatura/VerificarSituacaoCliente/{$customerId}"));
 
-        $bills = $response->object();
+        if ($response->successful()) {
+            $bills = $response->object();
+            if ($bills) {
 
-        if ($bills) {
-
-            Bill::updateOrCreate(['bill_id' => $bills->IdFatura], [
-                'bill_id' => $bills->IdFatura,
-                'customer_id' => $customerId,
-                'due_date' => $bills->DataPrevista,
-                'due_amount' => $bills->ValorPrevisto
-            ]);
-
-            SendGeikoCustomerNotification::dispatch($customerId, $bills->IdFatura, 'IN');
-
-            return;
-        }
-
-        return;
+                return Bill::updateOrCreate(['bill_id' => $bills->IdFatura], [
+                    'bill_id' => $bills->IdFatura,
+                    'customer_id' => $customerId,
+                    'due_date' => $bills->DataPrevista,
+                    'due_amount' => $bills->ValorPrevisto
+                ]);
+            }
+        };
+        return false;
     }
 
     public static function createCustomer(Customer $customer)
