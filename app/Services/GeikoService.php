@@ -50,7 +50,7 @@ class GeikoService
             ->post(self::buildUrl('Ncliente'), [
                 "nClientes" => [
                     [
-                        "codNotificacaoCli" => $notification->bill_id,
+                        "codNotificacaoCli" => $notification->id . $notification->bill_id,
                         "codCli" => $notification->customer_id,
                         "descricao" => $notification->message,
                         "dataInclusao" => $notification->include_at->format('Y-m-d'),

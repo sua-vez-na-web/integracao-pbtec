@@ -11,7 +11,9 @@ class CustomerAjaxController extends Controller
     public function consultaClienteByCNPJ(Request $request)
     {
         $geikoService = new GeikoService();
+
         $response = $geikoService->getGeikoCustomer($request->cnpj);
+
 
         if ($response) {
             return response()->json([

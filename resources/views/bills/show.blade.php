@@ -145,6 +145,7 @@
                         </div>
                     </div>
                     @if($bill->customer->geiko_id)
+                    <input type="hidden" name="geiko_id" value="{{$bill->customer->geiko_id}}">
                     <div class="form-group row">
                         <label for="" class="col-lg-2 text-right col-form-label"></label>
                         <div class="col-lg-offset-2 col-lg-10">

@@ -41,25 +41,15 @@ class RunGeikoApi extends Command
     public function handle()
     {
 
-        $geikoCustomers = GeikoService::getGeikoCustomers();
+        $customers = Customer::all(['id', 'cnpj']);
 
+        foreach ($customers as $key => $customer) {
 
-        foreach ($geikoCustomers->clientes as $geiko) {
+            $this->info("Cliente cnpj {$customer->cnpj} = {$key}");
 
-            $this->info('Consultando Cliente: ' . $geiko->razao_social);
-            $this->info('CNPJ: ' . $geiko->cpf_cnpj);
-
-            $customer = Customer::where('cnpj', $geiko->cpf_cnpj)
-                ->first();
-
-            if ($customer) {
-                $customer->geiko_id = $geiko->codigo;
-                $customer->save();
-
-                $this->info("Cliente Atualizado: " . $customer->cnpj);
-            } else {
-                $this->info("Cleinte não localizdo no integrador");
-            }
+            GeikoService::getGeikoCustomer($customer->cnpj);
         }
+
+        return 0;
     }
 }

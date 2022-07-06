@@ -7,6 +7,7 @@ use App\Models\Customer;
 use App\Models\GeikoNotification;
 use App\Services\GeikoService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BillController extends Controller
 {
@@ -62,9 +63,10 @@ class BillController extends Controller
     public function notifygeiko(Request $request)
     {
 
-        $customer = Customer::find($request->customer_id);
+        $customer = Customer::where('geiko_id', $request->geiko_id)->first();
 
         if ($customer) {
+            DB::beginTransaction();
 
             $notification = GeikoNotification::create([
                 'bill_id' => $request->id,
@@ -80,12 +82,16 @@ class BillController extends Controller
                 $notification->is_sent = true;
                 $notification->save();
 
+                DB::commit();
                 return redirect()->route('bills.index')->withSuccess("Resposta GEIKO: " . $response->object());
             } else {
+
+                DB::rollBack();
+                dd($response->object());
                 return redirect()
                     ->back()
                     ->withInput()
-                    ->withFail("ERRO GEIKO: " . $response->object()->message);
+                    ->withFail("ERRO GEIKO: " . $response->object()->Message);
             }
         } else {
             return redirect()

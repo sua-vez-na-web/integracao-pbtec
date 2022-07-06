@@ -20,7 +20,6 @@ class CreateGeikoNotificationsTable extends Migration
             $table->dateTime('include_at')->nullable();
             $table->dateTime('removed_at')->nullable();
             $table->integer('customer_id')->nullable();
-            $table->integer('type')->nullable();
             $table->boolean('is_sent')->nullable();
             $table->timestamps();
         });

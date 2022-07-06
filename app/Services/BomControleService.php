@@ -25,12 +25,10 @@ class BomControleService
         $bomControlleCustomer = $response->object()[0];
 
         if ($bomControlleCustomer) {
-            Customer::where('cnpj', $cnpj)->update([
+            return Customer::where('cnpj', $cnpj)->update([
                 'bomcontrole_id' => $bomControlleCustomer->Id
             ]);
         }
-
-        return $bomControlleCustomer->Id;
     }
 
 
@@ -40,9 +38,15 @@ class BomControleService
             ->withoutVerifying()
             ->get(self::buildUrl("/Fatura/VerificarSituacaoCliente/{$customerId}"));
 
+
         if ($response->successful()) {
+
             $bills = $response->object();
+
             if ($bills) {
+
+                Log::info("Cliente :" . $customerId);
+                Log::info("GEROU FATURA ATRASADA");
 
                 return Bill::updateOrCreate(['bill_id' => $bills->IdFatura], [
                     'bill_id' => $bills->IdFatura,

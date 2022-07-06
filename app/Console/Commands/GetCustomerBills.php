@@ -6,21 +6,21 @@ use App\Models\Customer;
 use App\Services\BomControleService;
 use Illuminate\Console\Command;
 
-class RunBomControleApi extends Command
+class GetCustomerBills extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'bomcontrolle:run';
+    protected $signature = 'bills:run';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'update status of customers from Bom Controlle Api';
+    protected $description = 'Get customers bills and create record';
 
     /**
      * Create a new command instance.
@@ -40,15 +40,11 @@ class RunBomControleApi extends Command
     public function handle()
     {
 
-        $customers = Customer::all(['id', 'cnpj']);
+        $customers = Customer::whereNotNull('bomcontrole_id')->get();
 
-        foreach ($customers as $key => $customer) {
+        foreach ($customers as $customer) {
 
-            $this->info("Cliente cnpj {$customer->cnpj} = {$key}");
-
-            BomControleService::getCustomerByCnpj($customer->cnpj);
+            BomControleService::getCustomerBills($customer->bomcontrole_id);
         }
-
-        return 0;
     }
 }
