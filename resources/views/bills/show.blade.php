@@ -47,6 +47,18 @@
                             @enderror
                         </div>
                     </div>
+                    <div class="form-group row @error('cnpj') has-error @enderror">
+                        <label class="col-lg-2 text-right col-form-label">CNPJ</label>
+                        <div class="col-lg-4">
+                            <div class="input-group">
+                                <input readonly type="text" value="{{ $bill->customer->cnpj ?? '' }}" class="form-control" id="cnpj" class="form-control" name="cnpj" value="{{ old('cnpj') ?? '' }}">
+                            </div>
+                            <span class="text-block text-danger" id="message"></span>
+                            @error('cnpj')
+                            <span class="form-text m-b-none">{{$errors->first('cnpj')}}</span>
+                            @enderror
+                        </div>
+                    </div>
 
                     <div class="form-group row @error('razao_social') has-error @enderror">
                         <label class="col-lg-2 text-right col-form-label">Razao Social</label>
@@ -112,7 +124,7 @@
                         <label class="col-lg-2 text-right col-form-label">Mensagem Notificar</label>
                         <div class="col-lg-10">
                             <div class="input-group">
-                                <input type="text" name="message" id="message" placeholder="ENTRAR EM CONTATO COM FINANCEIRO" value="ENTRAR EM CONTATO COM FINANCEIRO" class="form-control">
+                                <input type="text" name="message" id="message" placeholder="ENTRAR EM CONTATO COM FINANCEIRO" value="{{$bill->notification->message ?? 'ENTRAR EM CONTATO COM FINANCEIRO'}}" class="form-control">
                             </div>
                             <span class="text-block text-danger" id="message"></span>
                             @error('message')
@@ -161,23 +173,6 @@
                     </div>
                     @endif
                 </form>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-12">
-        <div class="ibox">
-            <div class="ibox-content">
-                <h5>Notificações Enviadas</h5>
-                <ul class="list-group">
-                    @foreach($notifications as $notification)
-                    <li class="list-group-item">
-                        <span class="text-bold">{{$notification->id}}</span>
-                        {{$notification->message}} |
-                        {{$notification->created_at->format('d/m/Y')}}
-                    </li>
-                    @endforeach
-                </ul>
             </div>
         </div>
     </div>

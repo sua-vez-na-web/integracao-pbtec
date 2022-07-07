@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use PhpParser\Builder\Class_;
 
 class Bill extends Model
 {
@@ -23,5 +24,10 @@ class Bill extends Model
     public function customer()
     {
         return $this->belongsTo(Customer::class, 'customer_id', 'bomcontrole_id');
+    }
+
+    public function notification()
+    {
+        return $this->hasOne(GeikoNotification::class);
     }
 }

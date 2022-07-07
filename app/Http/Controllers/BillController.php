@@ -54,10 +54,7 @@ class BillController extends Controller
     {
         $bill = Bill::find($id);
 
-        $notifications = GeikoNotification::where('bill_id', $bill->id)->get();
-
-        // dd($notifications, $bill);
-        return view('bills.show', compact('bill', 'notifications'));
+        return view('bills.show', compact('bill'));
     }
 
     public function notifygeiko(Request $request)
@@ -68,7 +65,7 @@ class BillController extends Controller
         if ($customer) {
             DB::beginTransaction();
 
-            $notification = GeikoNotification::create([
+            $notification = GeikoNotification::updateOrcreate(['bill_id' => $request->id], [
                 'bill_id' => $request->id,
                 'message' => $request->message,
                 'include_at' => $request->include_at ?? now(),
@@ -87,7 +84,6 @@ class BillController extends Controller
             } else {
 
                 DB::rollBack();
-                dd($response->object());
                 return redirect()
                     ->back()
                     ->withInput()
