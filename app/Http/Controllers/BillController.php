@@ -66,7 +66,7 @@ class BillController extends Controller
             DB::beginTransaction();
 
             $notification = GeikoNotification::updateOrcreate(['bill_id' => $request->id], [
-                'bill_id' => $request->id,
+                'bill_id' => $request->bill_id,
                 'message' => $request->message,
                 'include_at' => $request->include_at ?? now(),
                 'removed_at' => $request->removed_at ?? now()->addYear(),

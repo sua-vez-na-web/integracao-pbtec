@@ -36,6 +36,9 @@
             <li>
                 <a href="{{route('bills.index')}}"><i class="fa fa-dollar"></i> <span class="nav-label">Faturas</span></a>
             </li>
+            <li>
+                <a href="{{route('config.index')}}"><i class="fa fa-gears"></i> <span class="nav-label">Operações</span></a>
+            </li>
             <!-- <li>
                 <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Graphs</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">

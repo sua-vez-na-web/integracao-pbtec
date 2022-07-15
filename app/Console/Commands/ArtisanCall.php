@@ -2,27 +2,24 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Bill;
-use App\Models\Customer;
-use App\Services\GeikoService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 
-class RunGeikoApi extends Command
+class ArtisanCall extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'geiko:run';
+    protected $signature = 'artisan:test';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Update Geiko Customers Data';
+    protected $description = 'Teste de Comando';
 
     /**
      * Create a new command instance.
@@ -41,16 +38,10 @@ class RunGeikoApi extends Command
      */
     public function handle()
     {
+        sleep(25);
 
-        $customers = Customer::all(['id', 'cnpj']);
 
-        foreach ($customers as $key => $customer) {
-
-            $this->info("Cliente cnpj {$customer->cnpj} = {$key}");
-            Log::info("Cliente cnpj {$customer->cnpj} = {$key}");
-
-            GeikoService::getGeikoCustomer($customer->cnpj);
-        }
+        Log::info("CHAMOU PROGRAMATICAMENTESSSSSSSSSSS");
 
         return 0;
     }

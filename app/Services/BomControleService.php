@@ -41,20 +41,7 @@ class BomControleService
 
         if ($response->successful()) {
 
-            $bills = $response->object();
-
-            if ($bills) {
-
-                Log::info("Cliente :" . $customerId);
-                Log::info("GEROU FATURA ATRASADA");
-
-                return Bill::updateOrCreate(['bill_id' => $bills->IdFatura], [
-                    'bill_id' => $bills->IdFatura,
-                    'customer_id' => $customerId,
-                    'due_date' => $bills->DataPrevista,
-                    'due_amount' => $bills->ValorPrevisto
-                ]);
-            }
+            return $response->object();
         };
         return false;
     }
@@ -63,7 +50,6 @@ class BomControleService
     {
         Log::info("criar customer bom controlle");
         Log::info(json_encode($customer));
-
         Log::info($customer->uf);
 
         $response = HTTP::withHeaders(['Authorization' => 'ApiKey' . env('BOMCONTROLE_KEY')])
@@ -102,6 +88,21 @@ class BomControleService
         Log::info("BR" . json_encode($response->object()));
 
         return $response;
+    }
+
+    public static function getCustomerBill($faturaId)
+    {
+        $response = Http::withHeaders(['Authorization' => 'ApiKey' . env('BOMCONTROLE_KEY')])
+            ->withoutVerifying()
+            ->get(self::buildUrl("/Fatura/Obter/{$faturaId}"));
+
+        if ($response->successful()) {
+            return $response->object();
+        } else {
+            Log::error("ERRO NA API: " . json_encode($response->object()));
+
+            return false;
+        }
     }
 
     private static function buildUrl(string $endpoint): string

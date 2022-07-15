@@ -30,4 +30,6 @@ class Bill extends Model
     {
         return $this->hasOne(GeikoNotification::class);
     }
+
+    
 }

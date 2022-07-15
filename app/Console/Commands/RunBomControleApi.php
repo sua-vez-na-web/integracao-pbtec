@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\Customer;
 use App\Services\BomControleService;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class RunBomControleApi extends Command
 {
@@ -45,6 +46,7 @@ class RunBomControleApi extends Command
         foreach ($customers as $key => $customer) {
 
             $this->info("Cliente cnpj {$customer->cnpj} = {$key}");
+            Log::info("Cliente cnpj {$customer->cnpj} = {$key}");
 
             BomControleService::getCustomerByCnpj($customer->cnpj);
         }
