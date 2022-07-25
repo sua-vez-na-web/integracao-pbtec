@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\UpdateCustomerBillJob;
 use App\Models\Bill;
 use App\Services\BomControleService;
 use App\Services\GeikoService;
@@ -45,25 +46,27 @@ class UpdateCustomerBills extends Command
         $bills = Bill::all(['bill_id', 'id']);
 
         foreach ($bills as $bill) {
-            $this->info("CONSULTAR FATURA: " . $bill->bill_id);
+            // $this->info("CONSULTAR FATURA: " . $bill->bill_id);
 
-            $customerBill = BomControleService::getCustomerBill($bill->bill_id);
+            // $customerBill = BomControleService::getCustomerBill($bill->bill_id);
 
-            if (($customerBill) && ($customerBill->Quitado == true)) {
+            // if (($customerBill) && ($customerBill->Quitado == true)) {
 
-                $response = GeikoService::updateCustomerNotification($bill->bill_id);
+            //     $response = GeikoService::updateCustomerNotification($bill->bill_id);
 
 
-                if ($response) {
+            //     if ($response) {
 
-                    $this->info("FATURA PAGA: " . $customerBill->Id);
-                    $this->info("NOTIFICACAO REMOVIDA");
-                } else {
-                    $this->info("ERRO AO REMOVER NOTIFICACAO");
-                }
-            } else {
-                $this->info("FATURA NAO PAGA: " . $bill->bill_id);
-            }
+            //         $this->info("FATURA PAGA: " . $customerBill->Id);
+            //         $this->info("NOTIFICACAO REMOVIDA");
+            //     } else {
+            //         $this->info("ERRO AO REMOVER NOTIFICACAO");
+            //     }
+            // } else {
+            //     $this->info("FATURA NAO PAGA: " . $bill->bill_id);
+            // }
+
+            UpdateCustomerBillJob::dispatch($bill);
         }
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\GetCustomerBillJob;
 use App\Models\Bill;
 use App\Models\Customer;
 use App\Services\BomControleService;
@@ -46,24 +47,26 @@ class GetCustomerBills extends Command
 
         foreach ($customers as $customer) {
 
-            $bill = BomControleService::getCustomerBills($customer->bomcontrole_id);
+            // $bill = BomControleService::getCustomerBills($customer->bomcontrole_id);
 
-            $this->info("CLIENTE CNPJ:" . $customer->cnpj);
-            Log::info("CLIENTE CNPJ:" . $customer->cnpj);
+            // $this->info("CLIENTE CNPJ:" . $customer->cnpj);
+            // Log::info("CLIENTE CNPJ:" . $customer->cnpj);
 
-            if ($bill) {
+            // if ($bill) {
 
-                $this->info("Cliente :" . $customer->bomcontrole_id . " GEROU FATURA ATRASADA");
-                Log::info("Cliente :" . $customer->bomcontrole_id . " GEROU FATURA ATRASADA");
+            //     $this->info("Cliente :" . $customer->bomcontrole_id . " GEROU FATURA ATRASADA");
+            //     Log::info("Cliente :" . $customer->bomcontrole_id . " GEROU FATURA ATRASADA");
 
 
-                Bill::updateOrCreate(['bill_id' => $bill->IdFatura], [
-                    'bill_id' => $bill->IdFatura,
-                    'customer_id' => $customer->bomcontrole_id,
-                    'due_date' => $bill->DataPrevista,
-                    'due_amount' => $bill->ValorPrevisto
-                ]);
-            }
+            //     Bill::updateOrCreate(['bill_id' => $bill->IdFatura], [
+            //         'bill_id' => $bill->IdFatura,
+            //         'customer_id' => $customer->bomcontrole_id,
+            //         'due_date' => $bill->DataPrevista,
+            //         'due_amount' => $bill->ValorPrevisto
+            //     ]);
+            // }
+
+            GetCustomerBillJob::dispatch($customer);
         }
     }
 }

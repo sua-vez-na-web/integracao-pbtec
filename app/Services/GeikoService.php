@@ -79,7 +79,7 @@ class GeikoService
                         [
                             "codNotificacaoCli" => $notification->customer_id,
                             "codCli" => $notification->customer_id,
-                            "descricao" => "REMOVEU NOTIFICACAO INTEGRADOR",
+                            "descricao" => "REMOVEU NOTIFICACAO PELO INTEGRADOR",
                             "dataInclusao" => $notification->include_at->format('Y-m-d'),
                             "dataBaixa" => $notification->removed_at->format('Y-m-d')
                         ]

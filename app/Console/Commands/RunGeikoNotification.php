@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\SendGeikoCustomerNotificationJob;
 use App\Models\Bill;
 use App\Models\GeikoNotification;
 use App\Services\GeikoService;
@@ -45,28 +46,30 @@ class RunGeikoNotification extends Command
         $bills = Bill::all(['bill_id', 'customer_id', 'id']);
 
         foreach ($bills as $bill) {
-            DB::beginTransaction();
+            // DB::beginTransaction();
 
-            $notification = GeikoNotification::updateOrcreate(['bill_id' => $bill->bill_id], [
-                'bill_id' => $bill->bill_id,
-                'message' => "ENTRAR EM CONTATO COM FINANCEIRO INTEGRADOR",
-                'include_at' => $bill->include_at ?? now(),
-                'removed_at' => $bill->removed_at ?? now()->addYears(50),
-                'customer_id' => $bill->customer->geiko_id
-            ]);
+            // $notification = GeikoNotification::updateOrcreate(['bill_id' => $bill->bill_id], [
+            //     'bill_id' => $bill->bill_id,
+            //     'message' => "ENTRAR EM CONTATO COM FINANCEIRO INTEGRADOR",
+            //     'include_at' => $bill->include_at ?? now(),
+            //     'removed_at' => $bill->removed_at ?? now()->addYears(50),
+            //     'customer_id' => $bill->customer->geiko_id
+            // ]);
 
-            $response = GeikoService::sendCustomerNotification($notification);
+            // $response = GeikoService::sendCustomerNotification($notification);
 
-            if ($response->successful()) {
-                $notification->is_sent = true;
-                $notification->save();
+            // if ($response->successful()) {
+            //     $notification->is_sent = true;
+            //     $notification->save();
 
-                DB::commit();
-                $this->info("NOTIFICACAO CRIADA: " . $bill->bill_id);
-                $this->info("Resposta GEIKO: " . $response->object());
-            } else {
-                DB::rollBack();
-            }
+            //     DB::commit();
+            //     $this->info("NOTIFICACAO CRIADA: " . $bill->bill_id);
+            //     $this->info("Resposta GEIKO: " . $response->object());
+            // } else {
+            //     DB::rollBack();
+            // }
+
+            SendGeikoCustomerNotificationJob::dispatch($bill);
         }
     }
 }
