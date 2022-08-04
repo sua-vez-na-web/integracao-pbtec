@@ -24,7 +24,7 @@ class GetCustomerBillJob implements ShouldQueue
      */
 
     private $customer;
-    
+
     public function __construct(Customer $customer)
     {
         $this->customer = $customer;
@@ -46,12 +46,14 @@ class GetCustomerBillJob implements ShouldQueue
         if ($bill) {
 
             Log::info("Cliente: " . $this->customer->bomcontrole_id . " >>>> GEROU FATURA ATRASADA");
+            Log::info(">>>>>>> FATURA: {$bill->IdFatura}  VALOR: {$bill->ValorPrevisto}");
 
             Bill::updateOrCreate(['bill_id' => $bill->IdFatura], [
                 'bill_id' => $bill->IdFatura,
                 'customer_id' => $this->customer->bomcontrole_id,
                 'due_date' => $bill->DataPrevista,
-                'due_amount' => $bill->ValorPrevisto
+                'due_amount' => $bill->ValorPrevisto,
+                'updated_at' => now()
             ]);
         }
     }

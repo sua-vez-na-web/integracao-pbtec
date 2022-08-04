@@ -15,10 +15,12 @@
 
 @section('page-content')
 <div class="row">
-    <div class="col-lg-12">
+    <div class="col-lg-8 col-sm-12">
         <div class="ibox">
             <div class="ibox-title">
+
                 Detalhe da Fatura
+
             </div>
             <div class="ibox-content">
                 <form action="{{route('bills.notifygeiko')}}" method="post">
@@ -174,6 +176,14 @@
                     @endif
                 </form>
             </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-sm-12">
+        <h4>Operações Manuais</h4>
+        <div class="row flex-column">
+            <a href="{{ route('bills.get',$bill->id) }}" class="btn btn-primary my-2 mx-2">Consultar Fatura</a>
+            <a href="{{ route('bills.update',$bill->id)}}" class="btn btn-primary my-2 mx-2">Atualizar Fatura</a>
+            <a href="{{ route('bills.notify',$bill->id) }}" class="btn btn-primary my-2 mx-2">Notificar Fatura</a>
         </div>
     </div>
 </div>
