@@ -84,7 +84,7 @@ class BillController extends Controller
 
         if (($customerBill) && ($customerBill->Quitado == true)) {
 
-            $response = GeikoService::updateCustomerNotification($bill->bill_id);
+            $response = GeikoService::updateCustomerNotification($customerBill->Quitado, $bill);
 
             if ($response) {
                 $msg  = "FATURA PAGA: " . $customerBill->Id;

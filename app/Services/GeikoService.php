@@ -63,9 +63,15 @@ class GeikoService
             ]);
     }
 
-    public static function updateCustomerNotification($billId)
+    public static function updateCustomerNotification(bool $quitado, Bill $bill): bool
     {
-        $notification =  GeikoNotification::where('bill_id', $billId)
+
+        if ($quitado) {
+            $bill = Bill::where('bill_id', $bill->bill_id)->first();
+            $bill->delete();
+        }
+
+        $notification =  GeikoNotification::where('bill_id', $bill->bill_id)
             ->whereNotNull('customer_id')
             ->first();
 
@@ -88,25 +94,20 @@ class GeikoService
 
             if ($response->successful()) {
 
-                Log::info("REMOVEU NOTIFICACAO DE: " . $notification->id . $billId);
+                Log::info("REMOVEU NOTIFICACAO DE: " . $notification->id . $bill->bill_id);
 
                 $notification->message = "REMOVEU NOTIFICACAO INTEGRADOR";
                 $notification->save();
-
-                $bill = Bill::where('bill_id', $billId)->first();
-                $bill->delete();
-
                 DB::commit();
-
-                return true;
+            } else {
+                DB::rollBack();
             }
-
-            DB::rollBack();
-            return false;
         } else {
-            Log::info("NAO ACHOU NOTIFICACAO PARA: " . $billId);
-            return false;
+            DB::rollBack();
+            Log::info("NAO ACHOU NOTIFICACAO PARA: " . $bill->bill_d);
         }
+
+        return true;
     }
 
 
