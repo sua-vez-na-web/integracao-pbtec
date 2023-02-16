@@ -63,7 +63,7 @@ class GeikoService
             ]);
     }
 
-    public static function updateCustomerNotification(bool $quitado, Bill $bill): bool
+    public static function updateCustomerNotification(Bill $bill, bool $quitado = false): bool
     {
 
         if ($quitado) {

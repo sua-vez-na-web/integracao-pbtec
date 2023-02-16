@@ -43,7 +43,7 @@ class UpdateCustomerBillJob implements ShouldQueue
 
         if (($customerBill) && ($customerBill->Quitado == true)) {
 
-            $response = GeikoService::updateCustomerNotification($this->bill->bill_id);
+            $response = GeikoService::updateCustomerNotification($this->bill, $customerBill->Quitado);
 
             if ($response) {
                 Log::info("FATURA PAGA: " . $customerBill->Id);
