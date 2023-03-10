@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\LoggerSlackJob;
 use App\Jobs\UpdateCustomerBillJob;
 use App\Models\Bill;
 use App\Services\BomControleService;
@@ -45,6 +46,7 @@ class UpdateCustomerBills extends Command
 
         $bills = Bill::all(['bill_id', 'id']);
 
+        LoggerSlackJob::dispatch('JOB de atualização de fatura BOM CONTROLLE INICIDADA');
         foreach ($bills as $bill) {
             // $this->info("CONSULTAR FATURA: " . $bill->bill_id);
 
@@ -68,5 +70,7 @@ class UpdateCustomerBills extends Command
 
             UpdateCustomerBillJob::dispatch($bill);
         }
+
+        LoggerSlackJob::dispatch('JOB de atualização de fatura BOM CONTROLLE FINALIZADA');
     }
 }

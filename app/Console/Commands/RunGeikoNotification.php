@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\LoggerSlackJob;
 use App\Jobs\SendGeikoCustomerNotificationJob;
 use App\Models\Bill;
 use App\Models\GeikoNotification;
@@ -45,6 +46,7 @@ class RunGeikoNotification extends Command
 
         $bills = Bill::all(['bill_id', 'customer_id', 'id']);
 
+        LoggerSlackJob::dispatch('JOB envio de notificação ao GEIKO INICIADA');
         foreach ($bills as $bill) {
             // DB::beginTransaction();
 
@@ -71,5 +73,7 @@ class RunGeikoNotification extends Command
 
             SendGeikoCustomerNotificationJob::dispatch($bill);
         }
+
+        LoggerSlackJob::dispatch('JOB de envio de notificação ao GEIKO FINALIZADA');
     }
 }

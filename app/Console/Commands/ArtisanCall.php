@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\LoggerSlackJob;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 
@@ -12,7 +13,7 @@ class ArtisanCall extends Command
      *
      * @var string
      */
-    protected $signature = 'artisan:test';
+    protected $signature = 'schedule:test';
 
     /**
      * The console command description.
@@ -38,10 +39,7 @@ class ArtisanCall extends Command
      */
     public function handle()
     {
-        sleep(25);
-
-
-        Log::info("CHAMOU PROGRAMATICAMENTESSSSSSSSSSS");
+        LoggerSlackJob::dispatch('TESTE DE JOB AND SCHEDULE');
 
         return 0;
     }

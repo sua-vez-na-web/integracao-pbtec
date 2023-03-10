@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Jobs\GetCustomerBillJob;
+use App\Jobs\LoggerSlackJob;
 use App\Models\Bill;
 use App\Models\Customer;
 use App\Services\BomControleService;
@@ -45,6 +46,8 @@ class GetCustomerBills extends Command
 
         $customers = Customer::whereNotNull('bomcontrole_id')->get();
 
+        LoggerSlackJob::dispatch('JOB de consulta de faturas INICIDA');
+
         foreach ($customers as $customer) {
 
             // $bill = BomControleService::getCustomerBills($customer->bomcontrole_id);
@@ -68,5 +71,7 @@ class GetCustomerBills extends Command
 
             GetCustomerBillJob::dispatch($customer);
         }
+
+        LoggerSlackJob::dispatch('JOB de consulta de faturas FINALIZADA');
     }
 }
